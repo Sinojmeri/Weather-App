@@ -10,7 +10,8 @@
 <body>
     <div style="
         margin: 24px auto;
-        max-width: 50%;
+        width: 80%;
+        max-width: 600px;
         display: flex;
         justify-content: center;
         flex-direction: column;
@@ -25,7 +26,7 @@
         <input id="city" type="text" style="height: 30px; text-align: center; font-size: 20px;" />
         <button id="search" style="font-size: 30px;">Search</button>
     </div>
-        <h1 id="city_name" style="align-self: center;"></h1>
+        <h1 id="city_name" style="text-align: center;"></h1>
         <div style="
             display:flex;
             flex-direction: column; 
@@ -85,7 +86,7 @@
                 long: 20.0048,
             },
             {
-                city: "Pristina",
+                city: "Prishtina",
                 lat: 42.6727,
                 long: 21.1669,
             },
@@ -114,10 +115,19 @@
             console.log(data);
             currentT.innerText = `${city} ${data.current.temperature_2m} ${data.current_units.temperature_2m}`;
             minT.innerHTML = `Lowest Temperature: <br/> ${data.daily.temperature_2m_min[0]} ${data.daily_units.temperature_2m_min}`
-            minT.style.cssText = "text-align: center;";
+            minT.style.cssText = "text-align: center; font-size: 20px";
             maxT.innerHTML = `Highest Temperature: <br/> ${data.daily.temperature_2m_max[0]} ${data.daily_units.temperature_2m_max}`
-            maxT.style.cssText = "text-align: center;";
+            maxT.style.cssText = "text-align: center; font-size: 20px";
             prec.innerText = `Precipitation ${data.current.precipitation} ${data.current_units.precipitation}`;
+            if (data.current.precipitation > 0){
+                img.setAttribute("src", "rainy.jpg");
+            }
+            else if (data.current.precipitation === 0 && data.current.cloud_cover > 50){
+                img.setAttribute("src", "sunny_cloud.jpg");
+            }
+            else {
+                img.setAttribute("src", "sun.png");
+            }
         });
         searchBtn.addEventListener("click", async () => {
             const textInput = searchField.value;
